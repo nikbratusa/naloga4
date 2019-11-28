@@ -48,10 +48,17 @@ def grad(theta, X, y, lambda_):
     """
     t = theta.shape[0]
     m = y.shape[0]
-    alpha = 0.001
+    theta_new = np.zeros(t)
 
+    for j in range(t):
+        sum = 0
+        for i in range(m):
+            part = (h(X[i],theta) - y[i]) * X[i][j]
+            sum += part
+        sum = sum / m
+        theta_new[j] = sum
 
-    return 0
+    return theta_new
 
 def num_grad(theta, X, y, lambda_):
     """
@@ -59,8 +66,27 @@ def num_grad(theta, X, y, lambda_):
     Vrne numpyev vektor v velikosti vektorja theta.
     Za racunanje gradienta numericno uporabite funkcijo cost.
     """
-    # ... dopolnite (naloga 1, naloga 2)
-    return None
+    t = theta.shape[0]
+    eps = 0.00000001
+    theta_new = np.zeros(t)
+
+    for j in range(t):
+
+        theta_tmp1 = np.copy(theta)
+        theta_tmp2 = np.copy(theta)
+
+        theta_tmp1[j] += eps
+        theta_tmp2[j] -= eps
+
+        c1 = cost(theta_tmp1,X,y,lambda_)
+        c2 = cost(theta_tmp2,X,y,lambda_)
+
+        grad = (c1 - c2)/(2 * eps)
+        theta_new[j] = grad
+
+
+
+    return theta_new
 
 
 class LogRegClassifier(object):
