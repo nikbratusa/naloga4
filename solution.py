@@ -71,7 +71,11 @@ def grad(theta, X, y, lambda_):
             part = (h(X[i],theta) - y[i]) * X[i][j]
             sum += part
         sum = sum / m
-        theta_new[j] = sum
+
+        l = (lambda_/m) * theta[j]
+        theta_new[j] = sum + l
+
+
 
     return theta_new
 
@@ -82,7 +86,7 @@ def num_grad(theta, X, y, lambda_):
     Za racunanje gradienta numericno uporabite funkcijo cost.
     """
     t = theta.shape[0]
-    eps = 0.000000000000001
+    eps = 0.0000001
     theta_new = np.zeros(t)
 
     for j in range(t):
