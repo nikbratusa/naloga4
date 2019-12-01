@@ -31,13 +31,28 @@ def cost(theta, X, y, lambda_):
     """
     sum = 0
     r = y.shape[0]
+    t = theta.shape[0]
+    """
     for i in range(r):
         first = y[i] * math.log(h(X[i],theta))
         second = (1 - y[i]) * math.log(1 -(h(X[i],theta)))
         both = first + second
         sum += both
+    """
+    for i in range(r):
+        part = math.log((y[i] * h(X[i],theta)) + ((1-y[i]) * (1 - h(X[i],theta))))
+        sum += part
 
     res = -(1/r * sum)
+
+
+    sumTheta = 0
+    for j in range(t):
+        sumTheta += theta[j] ** 2
+
+    reg = (lambda_/(2*r)) * sumTheta
+
+    res += reg
 
     return res
 
@@ -67,7 +82,7 @@ def num_grad(theta, X, y, lambda_):
     Za racunanje gradienta numericno uporabite funkcijo cost.
     """
     t = theta.shape[0]
-    eps = 0.00000001
+    eps = 0.000000000000001
     theta_new = np.zeros(t)
 
     for j in range(t):

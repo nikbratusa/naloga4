@@ -1,8 +1,9 @@
 from matplotlib import pyplot
 import numpy as np
 
-from solution import load, LogRegLearner
-
+#from solution import load, LogRegLearner
+from solution import load, h, cost, grad, num_grad, LogRegLearner,\
+    CA, test_learning, test_cv, AUC
 
 def draw_decision(X, y, classifier, at1, at2, grid=50):
 
